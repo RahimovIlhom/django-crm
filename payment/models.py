@@ -20,3 +20,16 @@ class Payment(models.Model):
 
     def __str__(self):
         return f"{self.student} - {self.amount}"
+
+    def save(self, *args, **kwargs):
+        if self.pk:
+            old_payment = Payment.objects.get(pk=self.pk)
+            self.student.balance -= old_payment.amount
+        self.student.balance += self.amount
+        self.student.save()
+        super().save(*args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        self.student.balance -= self.amount
+        self.student.save()
+        super().delete(*args, **kwargs)
