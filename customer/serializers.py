@@ -3,9 +3,23 @@ from rest_framework import serializers
 from attendance.serializers import AttendanceSerializer
 from course.models import Course
 from course.serializers import CourseSerializer
-from group.serializers import GroupListSerializer
+from group.serializers import GroupSerializer
 from payment.serializers import PaymentSerializer
 from .models import Mentor, Student
+
+
+class MentorSerializers(serializers.ModelSerializer):
+
+    class Meta:
+        model = Mentor
+        fields = '__all__'
+
+
+class StudentSerializers(serializers.ModelSerializer):
+
+    class Meta:
+        model = Student
+        fields = '__all__'
 
 
 class MentorSerializer(serializers.ModelSerializer):
@@ -43,7 +57,7 @@ class MentorRetrieveSerializer(serializers.ModelSerializer):
 
     def get_groups(self, obj):
         groups = obj.groups.all()
-        return GroupListSerializer(instance=groups, many=True).data
+        return GroupSerializer(instance=groups, many=True).data
 
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -62,7 +76,7 @@ class StudentSerializer(serializers.ModelSerializer):
         return CourseSerializer(obj.course).data
 
     def get_group(self, obj):
-        return GroupListSerializer(obj.group).data
+        return GroupSerializer(obj.group).data
 
     def create(self, validated_data):
         group = validated_data.get('group', None)
@@ -77,7 +91,10 @@ class StudentSerializer(serializers.ModelSerializer):
         if group:
             instance.group = group
             instance.status = group.status
-            instance.save()
+        else:
+            instance.group = None
+            instance.status = 'no_started'
+        instance.save()
         return instance
 
 
@@ -99,7 +116,7 @@ class StudentRetrieveSerializer(serializers.ModelSerializer):
         return CourseSerializer(obj.course).data
 
     def get_group(self, obj):
-        return GroupListSerializer(obj.group).data
+        return GroupSerializer(obj.group).data
 
     def get_attendances(self, obj):
         attendances = obj.attendances.all()

@@ -31,6 +31,7 @@ urlpatterns = [
     path('', include(router.urls)),
     path('api/courses/', include('course.urls')),
     path('api/customer/', include('customer.urls')),
+    path('api/groups/', include('group.urls')),
     path('api/token/', include('users.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('docs<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
