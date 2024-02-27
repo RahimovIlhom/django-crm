@@ -1,3 +1,6 @@
+from typing import Any
+
+from django.utils.module_loading import import_string
 from rest_framework import serializers
 
 from course.serializers import CourseSerializer
@@ -26,15 +29,22 @@ class GroupListSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'course', 'course_info', 'mentor', 'mentor_info', 'image', 'created_time', 'started_time',
                   'finished_time', 'status', 'students_count']
 
-    def get_course_info(self, obj):
+    def get_course_info(self, obj) -> dict:
         return CourseSerializer(obj.course).data
 
-    def get_mentor_info(self, obj):
-        from customer.serializers import MentorSerializers
+    def get_mentor_info(self, obj) -> dict:
+        mentor_serializer_class = 'customer.serializers.MentorSerializers'
+        MentorSerializers = import_string(mentor_serializer_class)
         return MentorSerializers(obj.mentor).data
 
     def get_students_count(self, obj):
         return obj.students.count()
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        data['course_info'] = self.get_course_info(instance)
+        data['mentor_info'] = self.get_mentor_info(instance)
+        return data
 
 
 class GroupRetrieveSerializer(serializers.ModelSerializer):
@@ -53,16 +63,17 @@ class GroupRetrieveSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'course', 'course_info', 'mentor', 'mentor_info', 'image', 'created_time', 'started_time',
                   'finished_time', 'status', 'students', 'students_count']
 
-    def get_course_info(self, obj):
+    def get_course_info(self, obj) -> dict:
         return CourseSerializer(obj.course).data
 
-    def get_mentor_info(self, obj):
+    def get_mentor_info(self, obj) -> dict:
         from customer.serializers import MentorSerializers
         return MentorSerializers(obj.mentor).data
 
-    def get_students(self, obj):
+    def get_students(self, obj) -> list:
         from customer.serializers import StudentSerializers
-        return StudentSerializers(obj.students.all(), many=True).data
+        serialized_students = StudentSerializers(obj.students.all(), many=True).data
+        return serialized_students
 
     def get_students_count(self, obj):
         return obj.students.count()

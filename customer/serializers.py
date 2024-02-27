@@ -34,7 +34,7 @@ class MentorSerializer(serializers.ModelSerializer):
     def get_group_count(self, obj):
         return obj.groups.count()
 
-    def get_course(self, obj):
+    def get_course(self, obj) -> dict:
         return CourseSerializer(obj.course).data
 
 
@@ -52,10 +52,10 @@ class MentorRetrieveSerializer(serializers.ModelSerializer):
     def get_group_count(self, obj):
         return obj.groups.count()
 
-    def get_course(self, obj):
+    def get_course(self, obj) -> dict:
         return CourseSerializer(obj.course).data
 
-    def get_groups(self, obj):
+    def get_groups(self, obj) -> list:
         groups = obj.groups.all()
         return GroupSerializer(instance=groups, many=True).data
 
@@ -72,10 +72,10 @@ class StudentSerializer(serializers.ModelSerializer):
         fields = ['id', 'fullname', 'phone_number', 'parents', 'course', 'course_info', 'group', 'group_info',
                   'balance', 'created_time', 'update_time', 'status']
 
-    def get_course(self, obj):
+    def get_course(self, obj) -> dict:
         return CourseSerializer(obj.course).data
 
-    def get_group(self, obj):
+    def get_group(self, obj) -> dict:
         return GroupSerializer(obj.group).data
 
     def create(self, validated_data):
@@ -112,16 +112,16 @@ class StudentRetrieveSerializer(serializers.ModelSerializer):
         fields = ['id', 'fullname', 'phone_number', 'parents', 'course', 'course_info', 'group', 'group_info',
                   'balance', 'created_time', 'update_time', 'status', 'attendances', 'payments']
 
-    def get_course(self, obj):
+    def get_course(self, obj) -> dict:
         return CourseSerializer(obj.course).data
 
-    def get_group(self, obj):
+    def get_group(self, obj) -> dict:
         return GroupSerializer(obj.group).data
 
-    def get_attendances(self, obj):
+    def get_attendances(self, obj) -> list:
         attendances = obj.attendances.all()
         return AttendanceSerializer(attendances, many=True).data
 
-    def get_payments(self, obj):
+    def get_payments(self, obj) -> list:
         payments = obj.payments.all()
         return PaymentSerializer(payments, many=True).data
