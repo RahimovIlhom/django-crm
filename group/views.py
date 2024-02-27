@@ -6,10 +6,10 @@ from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from customer.models import Student
+from customer.models import Student, Mentor
 from .models import Group
 from .serializers import GroupListSerializer, GroupSerializer, GroupRetrieveSerializer, \
-    StudentGroupAssignmentSerializer, StartCompletedGroupSerializer
+    StudentGroupAssignmentSerializer, StartCompletedGroupSerializer, AttachTeacherSerializer, ReleaseTeacherSerializer
 
 
 class GroupListAPIView(generics.ListAPIView):
@@ -76,15 +76,15 @@ class AddStudentToGroup(generics.CreateAPIView):
         try:
             student = Student.objects.get(pk=student_id)
         except Student.DoesNotExist:
-            return Response({'success': False, "error": "Student not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'success': False, "message": "Student not found"}, status=status.HTTP_404_NOT_FOUND)
 
         try:
             group = Group.objects.get(pk=group_id)
         except Group.DoesNotExist:
-            return Response({'success': False, "error": "Group not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'success': False, "message": "Group not found"}, status=status.HTTP_404_NOT_FOUND)
 
         if student.group == group:
-            return Response({'success': False, 'error': 'The student has already joined the specified group'},
+            return Response({'success': False, 'message': 'The student has already joined the specified group'},
                             status=status.HTTP_400_BAD_REQUEST)
 
         student.group = group
@@ -108,15 +108,15 @@ class RemoveStudentFromGroup(generics.CreateAPIView):
         try:
             student = Student.objects.get(pk=student_id)
         except Student.DoesNotExist:
-            return Response({'success': False, "error": "Student not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'success': False, "message": "Student not found"}, status=status.HTTP_404_NOT_FOUND)
 
         try:
             group = Group.objects.get(pk=group_id)
         except Group.DoesNotExist:
-            return Response({'success': False, "error": "Group not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'success': False, "message": "Group not found"}, status=status.HTTP_404_NOT_FOUND)
 
         if student.group != group:
-            return Response({'success': False, 'error': 'Student is not assigned to the specified group'},
+            return Response({'success': False, 'message': 'Student is not assigned to the specified group'},
                             status=status.HTTP_400_BAD_REQUEST)
 
         student.group = None
@@ -139,10 +139,10 @@ class StartGroupAPIView(generics.CreateAPIView):
         try:
             group = Group.objects.get(pk=group_id)
         except Group.DoesNotExist:
-            return Response({'success': False, "error": "Group not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'success': False, "message": "Group not found"}, status=status.HTTP_404_NOT_FOUND)
 
         if group.status == 'continues':
-            return Response({'success': False, 'error': 'Group is already started'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'success': False, 'message': 'Group is already started'}, status=status.HTTP_400_BAD_REQUEST)
 
         group.status = 'continues'
         group.started_time = datetime.now()  # Use datetime.now() to get the current datetime
@@ -169,10 +169,10 @@ class CompleteGroupAPIView(generics.CreateAPIView):
         try:
             group = Group.objects.get(pk=group_id)
         except Group.DoesNotExist:
-            return Response({'success': False, "error": "Group not found"}, status=status.HTTP_404_NOT_FOUND)
+            return Response({'success': False, "message": "Group not found"}, status=status.HTTP_404_NOT_FOUND)
 
         if group.status == 'completed':
-            return Response({'success': False, 'error': 'Group is already completed'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'success': False, 'message': 'Group is already completed'}, status=status.HTTP_400_BAD_REQUEST)
 
         group.status = 'completed'
         group.started_time = datetime.now()  # Use datetime.now() to get the current datetime
@@ -185,3 +185,53 @@ class CompleteGroupAPIView(generics.CreateAPIView):
 
         return Response({'success': True, 'message': f'Group {group.title} completed successfully'},
                         status=status.HTTP_200_OK)
+
+
+class AttachTeacherToGroup(generics.CreateAPIView):
+    serializer_class = AttachTeacherSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        group_id = serializer.validated_data['group_id']
+        mentor_id = serializer.validated_data['mentor_id']
+
+        try:
+            group = Group.objects.get(pk=group_id)
+        except Group.DoesNotExist:
+            return Response({'success': False, 'message': 'Group not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        try:
+            mentor = Mentor.objects.get(pk=mentor_id)
+        except Mentor.DoesNotExist:
+            return Response({'success': False, 'message': 'Mentor not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        if group.mentor is not None:
+            return Response({'success': False, 'message': 'Group already has a teacher attached'}, status=status.HTTP_400_BAD_REQUEST)
+
+        group.mentor = mentor
+        group.save()
+
+        return Response({'success': True, 'message': 'Teacher attached to group successfully'}, status=status.HTTP_200_OK)
+
+
+class ReleaseTeacherFromGroup(generics.CreateAPIView):
+    serializer_class = ReleaseTeacherSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        group_id = serializer.validated_data['group_id']
+
+        try:
+            group = Group.objects.get(pk=group_id)
+        except Group.DoesNotExist:
+            return Response({'success': False, 'message': 'Group not found'}, status=status.HTTP_404_NOT_FOUND)
+
+        if group.mentor is None:
+            return Response({'success': False, 'message': 'There is no teacher attached to the group'}, status=status.HTTP_400_BAD_REQUEST)
+
+        group.mentor = None
+        group.save()
+
+        return Response({'success': True, 'message': 'The teacher was removed from the group'}, status=status.HTTP_200_OK)

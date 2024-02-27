@@ -106,3 +106,32 @@ class StartCompletedGroupSerializer(serializers.Serializer):
         return {
             'group_id': instance.get('group_id', ''),
         }
+
+
+class AttachTeacherSerializer(serializers.Serializer):
+    group_id = serializers.IntegerField(
+        required=True,
+        write_only=True,
+    )
+    mentor_id = serializers.IntegerField(
+        required=True,
+        write_only=True,
+    )
+
+    def to_representation(self, instance):
+        return {
+            'mentor_id': instance.get('mentor_id', ''),
+            'group_id': instance.get('group_id', ''),
+        }
+
+
+class ReleaseTeacherSerializer(serializers.Serializer):
+    group_id = serializers.IntegerField(
+        required=True,
+        write_only=True,
+    )
+
+    def to_representation(self, instance):
+        return {
+            'group_id': instance.get('group_id', ''),
+        }
