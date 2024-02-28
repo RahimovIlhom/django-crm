@@ -1,15 +1,15 @@
-from datetime import datetime
-
+from django.utils import timezone
 from django.db.models import Q
-from django.shortcuts import render
-from rest_framework import generics, status
+from rest_framework import generics, status, serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from attendance.models import Attendance
 from customer.models import Student, Mentor
 from .models import Group
 from .serializers import GroupListSerializer, GroupSerializer, GroupRetrieveSerializer, \
-    StudentGroupAssignmentSerializer, StartCompletedGroupSerializer, AttachTeacherSerializer, ReleaseTeacherSerializer
+    StudentGroupAssignmentSerializer, StartCompletedGroupSerializer, AttachTeacherSerializer, ReleaseTeacherSerializer, \
+    AttendanceGroupSerializer
 
 
 class GroupListAPIView(generics.ListAPIView):
@@ -142,10 +142,11 @@ class StartGroupAPIView(generics.CreateAPIView):
             return Response({'success': False, "message": "Group not found"}, status=status.HTTP_404_NOT_FOUND)
 
         if group.status == 'continues':
-            return Response({'success': False, 'message': 'Group is already started'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'success': False, 'message': 'Group is already started'},
+                            status=status.HTTP_400_BAD_REQUEST)
 
         group.status = 'continues'
-        group.started_time = datetime.now()  # Use datetime.now() to get the current datetime
+        group.started_time = timezone.now()
         group.save()
 
         students = group.students.all()
@@ -172,10 +173,11 @@ class CompleteGroupAPIView(generics.CreateAPIView):
             return Response({'success': False, "message": "Group not found"}, status=status.HTTP_404_NOT_FOUND)
 
         if group.status == 'completed':
-            return Response({'success': False, 'message': 'Group is already completed'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'success': False, 'message': 'Group is already completed'},
+                            status=status.HTTP_400_BAD_REQUEST)
 
         group.status = 'completed'
-        group.started_time = datetime.now()  # Use datetime.now() to get the current datetime
+        group.started_time = timezone.now()
         group.save()
 
         students = group.students.all()
@@ -207,12 +209,14 @@ class AttachTeacherToGroup(generics.CreateAPIView):
             return Response({'success': False, 'message': 'Mentor not found'}, status=status.HTTP_404_NOT_FOUND)
 
         if group.mentor is not None:
-            return Response({'success': False, 'message': 'Group already has a teacher attached'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'success': False, 'message': 'Group already has a teacher attached'},
+                            status=status.HTTP_400_BAD_REQUEST)
 
         group.mentor = mentor
         group.save()
 
-        return Response({'success': True, 'message': 'Teacher attached to group successfully'}, status=status.HTTP_200_OK)
+        return Response({'success': True, 'message': 'Teacher attached to group successfully'},
+                        status=status.HTTP_200_OK)
 
 
 class ReleaseTeacherFromGroup(generics.CreateAPIView):
@@ -229,9 +233,46 @@ class ReleaseTeacherFromGroup(generics.CreateAPIView):
             return Response({'success': False, 'message': 'Group not found'}, status=status.HTTP_404_NOT_FOUND)
 
         if group.mentor is None:
-            return Response({'success': False, 'message': 'There is no teacher attached to the group'}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({'success': False, 'message': 'There is no teacher attached to the group'},
+                            status=status.HTTP_400_BAD_REQUEST)
 
         group.mentor = None
         group.save()
 
-        return Response({'success': True, 'message': 'The teacher was removed from the group'}, status=status.HTTP_200_OK)
+        return Response({'success': True, 'message': 'The teacher was removed from the group'},
+                        status=status.HTTP_200_OK)
+
+
+class AttendanceGroupAPIView(generics.CreateAPIView):
+    serializer_class = AttendanceGroupSerializer
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        if serializer.is_valid():
+            self.perform_create(serializer)
+            return Response({'success': True, 'message': 'Attendance successfully'},
+                            status=status.HTTP_200_OK)
+        else:
+            data = {
+                'success': False,
+                'message': "Ma'lumotlar to'liq yuborilmadi!"
+            }
+            data.update(serializer.errors)
+            return Response(data, status=status.HTTP_400_BAD_REQUEST)
+
+    def perform_create(self, serializer):
+        data = serializer.validated_data
+        student_attendance = data.get('students_attendance', {})
+        group_id = data.get('group_id')
+        group_students = Student.objects.filter(group__id=group_id)
+
+        if not group_students.exists():
+            raise serializers.ValidationError({'success': False, 'message': 'Group students not found'})
+
+        for student in group_students:
+            student_id = str(student.id)
+            attendance, created = Attendance.objects.get_or_create(student=student, date=timezone.now().date())
+            if student_id in student_attendance.keys():
+                attendance_status = student_attendance[student_id]
+                attendance.attended = attendance_status
+                attendance.save()

@@ -2,7 +2,7 @@ from django.urls import path
 
 from group.views import GroupListAPIView, GroupCreateAPIView, GroupUpdateAPIView, GroupDeleteAPIView, \
     GroupRetrieveAPIView, AddStudentToGroup, RemoveStudentFromGroup, StartGroupAPIView, CompleteGroupAPIView, \
-    AttachTeacherToGroup, ReleaseTeacherFromGroup
+    AttachTeacherToGroup, ReleaseTeacherFromGroup, AttendanceGroupAPIView
 
 urlpatterns = [
     path('all/', GroupListAPIView.as_view(), name='group-list'),
@@ -13,8 +13,12 @@ urlpatterns = [
 
     path('add-student-to-group/', AddStudentToGroup.as_view(), name='add-student-to-group'),
     path('remove-student-from-group/', RemoveStudentFromGroup.as_view(), name='remove-student-from-group'),
+
     path('start/', StartGroupAPIView.as_view(), name='start-group'),
     path('complete/', CompleteGroupAPIView.as_view(), name='complete-group'),
-    path('attach-teacher/', AttachTeacherToGroup.as_view(), name='attach_teacher_to_group'),
-    path('release-teacher/', ReleaseTeacherFromGroup.as_view(), name='release_teacher_from_group'),
+
+    path('attach-teacher/', AttachTeacherToGroup.as_view(), name='attach-teacher-to-group'),
+    path('release-teacher/', ReleaseTeacherFromGroup.as_view(), name='release-teacher-from-group'),
+
+    path('attendance-group/', AttendanceGroupAPIView.as_view(), name='attendance-group')
 ]

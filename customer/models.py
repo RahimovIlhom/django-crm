@@ -8,6 +8,8 @@ class Mentor(models.Model):
     location = models.CharField(max_length=255, null=True, blank=True)
     course = models.ForeignKey('course.Course', on_delete=models.CASCADE, related_name='mentors')
 
+    objects = models.Manager()
+
     class Meta:
         ordering = ['fullname']
 
@@ -33,6 +35,8 @@ class Student(models.Model):
     created_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=20, choices=STATUS, default='no_started')
+
+    objects = models.Manager()
 
     class Meta:
         ordering = ['fullname', '-update_time']

@@ -14,6 +14,8 @@ class Group(models.Model):
     finished_time = models.DateTimeField(null=True, blank=True)
     status = models.CharField(max_length=20, choices=STATUS, default='no_started')
 
+    objects = models.Manager()
+
     class Meta:
         ordering = ['title', 'course']
 

@@ -8,7 +8,6 @@ from group.models import Group
 
 
 class GroupSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Group
         fields = '__all__'
@@ -26,7 +25,8 @@ class GroupListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Group
-        fields = ['id', 'title', 'course', 'course_info', 'mentor', 'mentor_info', 'image', 'created_time', 'started_time',
+        fields = ['id', 'title', 'course', 'course_info', 'mentor', 'mentor_info', 'image', 'created_time',
+                  'started_time',
                   'finished_time', 'status', 'students_count']
 
     def get_course_info(self, obj) -> dict:
@@ -60,7 +60,8 @@ class GroupRetrieveSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Group
-        fields = ['id', 'title', 'course', 'course_info', 'mentor', 'mentor_info', 'image', 'created_time', 'started_time',
+        fields = ['id', 'title', 'course', 'course_info', 'mentor', 'mentor_info', 'image', 'created_time',
+                  'started_time',
                   'finished_time', 'status', 'students', 'students_count']
 
     def get_course_info(self, obj) -> dict:
@@ -135,3 +136,17 @@ class ReleaseTeacherSerializer(serializers.Serializer):
         return {
             'group_id': instance.get('group_id', ''),
         }
+
+
+class AttendanceGroupSerializer(serializers.Serializer):
+    group_id = serializers.IntegerField()
+    students_attendance = serializers.DictField(child=serializers.BooleanField())
+
+    def validate(self, data):
+        if 'group_id' not in data:
+            raise serializers.ValidationError("group_id is required")
+
+        if not isinstance(data.get('students_attendance', {}), dict):
+            raise serializers.ValidationError("students_attendance should be a dictionary")
+
+        return data

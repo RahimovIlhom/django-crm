@@ -15,6 +15,8 @@ class Payment(models.Model):
     created_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
 
+    objects = models.Manager()
+
     class Meta:
         ordering = ['-created_time']
 
