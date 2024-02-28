@@ -249,9 +249,11 @@ class AttendanceGroupAPIView(generics.CreateAPIView):
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid():
-            self.perform_create(serializer)
-            return Response({'success': True, 'message': 'Attendance successfully'},
-                            status=status.HTTP_200_OK)
+            if self.perform_create(serializer):
+                return Response({'success': True, 'message': 'Attendance successfully'},
+                                status=status.HTTP_200_OK)
+            return Response({'success': False, 'message': "To attend a group, the group must be active"},
+                            status=status.HTTP_400_BAD_REQUEST)
         else:
             data = {
                 'success': False,
@@ -269,6 +271,10 @@ class AttendanceGroupAPIView(generics.CreateAPIView):
         if not group_students.exists():
             raise serializers.ValidationError({'success': False, 'message': 'Group students not found'})
 
+        group = Group.objects.get(id=group_id)
+        if group.status != 'continues':
+            return False
+
         for student in group_students:
             student_id = str(student.id)
             attendance, created = Attendance.objects.get_or_create(student=student, date=timezone.now().date())
@@ -276,3 +282,4 @@ class AttendanceGroupAPIView(generics.CreateAPIView):
                 attendance_status = student_attendance[student_id]
                 attendance.attended = attendance_status
                 attendance.save()
+        return True
