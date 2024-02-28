@@ -33,6 +33,7 @@ urlpatterns = [
     path('api/customer/', include('customer.urls')),
     path('api/groups/', include('group.urls')),
     path('api/payments/', include('payment.urls')),
+    path('api/attendances/', include('attendance.urls')),
     path('api/token/', include('users.urls')),
     path('api-auth/', include('rest_framework.urls')),
     path('docs<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),

@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from attendance.models import Attendance
+from attendance.pagination import CustomPagination
 from customer.models import Student, Mentor
 from .models import Group
 from .serializers import GroupListSerializer, GroupSerializer, GroupRetrieveSerializer, \
@@ -15,6 +16,7 @@ from .serializers import GroupListSerializer, GroupSerializer, GroupRetrieveSeri
 class GroupListAPIView(generics.ListAPIView):
     queryset = Group.objects.all()
     serializer_class = GroupListSerializer
+    pagination_class = CustomPagination
 
     def get_queryset(self):
         queryset = super().get_queryset()

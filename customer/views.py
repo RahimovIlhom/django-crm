@@ -2,6 +2,7 @@ from django.db.models import Q
 from rest_framework import generics, status
 from rest_framework.response import Response
 
+from attendance.pagination import CustomPagination
 from customer.models import Mentor, Student
 from customer.serializers import MentorRetrieveSerializer, \
     MentorSerializer, StudentSerializer, StudentRetrieveSerializer
@@ -28,6 +29,7 @@ class MentorListAPIView(generics.ListAPIView):
 class StudentListAPIView(generics.ListAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
+    pagination_class = CustomPagination
 
     def get_queryset(self):
         queryset = super().get_queryset()
