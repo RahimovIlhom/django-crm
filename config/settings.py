@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
 
     # local apps
+    'home_app.apps.HomeAppConfig',
     "course.apps.CourseConfig",
     "customer.apps.CustomerConfig",
     "group.apps.GroupConfig",
@@ -113,7 +114,7 @@ REST_FRAMEWORK = {
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
