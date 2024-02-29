@@ -1,5 +1,3 @@
-from typing import Any
-
 from django.utils.module_loading import import_string
 from rest_framework import serializers
 
