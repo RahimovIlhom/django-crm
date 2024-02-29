@@ -1,8 +1,9 @@
 from django.utils import timezone
 from django.db.models import Q
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, status, serializers
 from rest_framework.response import Response
-from rest_framework.views import APIView
 
 from attendance.models import Attendance
 from attendance.pagination import CustomPagination
@@ -26,10 +27,11 @@ class GroupListAPIView(generics.ListAPIView):
             queryset = queryset.filter(course_id=course_id)
         return queryset
 
+    @swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('course_id', openapi.IN_QUERY, description="Filter groups by course ID",
+                          type=openapi.TYPE_INTEGER)
+    ])
     def get(self, request, *args, **kwargs):
-        """
-        Filter mentors by course_id. Example: .../api/groups/all/?course_id={course_id}
-        """
         return super().list(request, *args, **kwargs)
 
 

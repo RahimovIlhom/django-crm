@@ -1,4 +1,6 @@
 from django.db.models import Q
+from drf_yasg import openapi
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, status
 from rest_framework.response import Response
 
@@ -19,10 +21,11 @@ class MentorListAPIView(generics.ListAPIView):
             queryset = queryset.filter(course_id=course_id)
         return queryset
 
+    @swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('course_id', openapi.IN_QUERY, description="Filter mentors by course ID",
+                          type=openapi.TYPE_INTEGER)
+    ])
     def get(self, request, *args, **kwargs):
-        """
-        Filter mentors by course_id. Example: .../api/customer/mentors/all/?course_id={course_id}
-        """
         return super().list(request, *args, **kwargs)
 
 
@@ -39,10 +42,11 @@ class StudentListAPIView(generics.ListAPIView):
             queryset = queryset.filter(course_id=course_id)
         return queryset
 
+    @swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('course_id', openapi.IN_QUERY, description="Filter students by course ID",
+                          type=openapi.TYPE_INTEGER)
+    ])
     def get(self, request, *args, **kwargs):
-        """
-        Filter mentors by course_id. Example: .../api/customer/students/all/?course_id={course_id}
-        """
         return super().list(request, *args, **kwargs)
 
 
@@ -103,6 +107,7 @@ class StudentDeleteAPIView(generics.DestroyAPIView):
 class StudentCompletedListAPIView(generics.ListAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
+    pagination_class = CustomPagination
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -112,16 +117,18 @@ class StudentCompletedListAPIView(generics.ListAPIView):
             queryset = queryset.filter(course_id=course_id)
         return queryset
 
+    @swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('course_id', openapi.IN_QUERY, description="Filter completed students by course ID",
+                          type=openapi.TYPE_INTEGER)
+    ])
     def get(self, request, *args, **kwargs):
-        """
-        Filter mentors by course_id. Example: .../api/customer/completed/students/?course_id={course_id}
-        """
         return super().list(request, *args, **kwargs)
 
 
 class StudentDeletedListAPIView(generics.ListAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
+    pagination_class = CustomPagination
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -131,8 +138,9 @@ class StudentDeletedListAPIView(generics.ListAPIView):
             queryset = queryset.filter(course_id=course_id)
         return queryset
 
+    @swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('course_id', openapi.IN_QUERY, description="Filter deleted students by course ID",
+                          type=openapi.TYPE_INTEGER)
+    ])
     def get(self, request, *args, **kwargs):
-        """
-        Filter mentors by course_id. Example: .../api/customer/deleted/students/?course_id={course_id}
-        """
         return super().list(request, *args, **kwargs)
