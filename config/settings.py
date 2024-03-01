@@ -15,8 +15,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = env("DEBUG", default=False)
-DEBUG = False
+DEBUG = env("DEBUG", default=False)
+# DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     "rest_framework",
     # 'rest_framework.authtoken',
     "rest_framework_simplejwt",
+    'corsheaders',
 
     # local apps
     'home_app.apps.HomeAppConfig',
@@ -49,13 +50,17 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
+    'home_app.middleware.NotFoundMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=5),
@@ -100,6 +105,7 @@ SIMPLE_JWT = {
 ROOT_URLCONF = 'config.urls'
 
 REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'home_app.custom_exception_handler.custom_exception_handler',
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
@@ -107,8 +113,6 @@ REST_FRAMEWORK = {
         # 'rest_framework.authentication.BasicAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
-    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler',
-
 }
 
 TEMPLATES = [
