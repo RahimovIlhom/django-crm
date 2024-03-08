@@ -20,6 +20,43 @@ DEBUG = env("DEBUG", default=False)
 
 ALLOWED_HOSTS = ['*']
 
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_REPLACE_HTTPS_REFERER = True
+CSRF_TRUSTED_ORIGINS = [
+    'https://localhost',
+    'https://example-us.vercel.app',
+    'https://example.us',
+    'https://www.example.us',
+    'https://www.example.us:40001',
+    'https://example.us:40001',
+    'https://0.0.0.0:40001',
+    '*'
+]
+CORS_ALLOW_HEADERS = ["accept", "referer", "accept-encoding", "authorization", "content-type", "dnt", "origin",
+                      "user-agent", "x-csrftoken", "x-sessionid", "x-requested-with"]
+CORS_EXPOSE_HEADERS = ['Set-Cookie']
+
+CORS_ALLOWED_HOSTS = [
+    'example.us',
+    'www.example.us',
+    'example-us.vercel.app',
+    'localhost',
+    '*'
+]
+CORS_ALLOWED_ORIGINS = [
+    'https://localhost',
+    'https://example-us.vercel.app',
+    'https://example.us',
+    'https://www.example.us',
+    'https://www.example.us:40001',
+    'https://example.us:40001',
+    'https://0.0.0.0:40001',
+    '*'
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -59,12 +96,6 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'home_app.middleware.NotFoundMiddleware',
 ]
-
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    # Add other origins as needed
-]
-
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=5),
