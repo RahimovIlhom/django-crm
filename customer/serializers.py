@@ -29,7 +29,7 @@ class MentorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Mentor
-        fields = ['id', 'fullname', 'phone_number', 'photo', 'location', 'course', 'course_info', 'group_count']
+        fields = ['id', 'fullname', 'phone_number', 'photo', 'location', 'birthday', 'course', 'course_info', 'group_count']
 
     def get_group_count(self, obj):
         return obj.groups.count()
@@ -46,7 +46,7 @@ class MentorRetrieveSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Mentor
-        fields = ['id', 'fullname', 'phone_number', 'photo', 'location', 'course', 'course_info', 'group_count',
+        fields = ['id', 'fullname', 'phone_number', 'photo', 'location', 'birthday', 'course', 'course_info', 'group_count',
                   'groups']
 
     def get_group_count(self, obj):

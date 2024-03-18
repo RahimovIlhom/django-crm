@@ -6,6 +6,7 @@ class Mentor(models.Model):
     phone_number = models.CharField(max_length=15)
     photo = models.ImageField(upload_to='mentor/photos/', null=True, blank=True)
     location = models.CharField(max_length=255, null=True, blank=True)
+    birthday = models.DateField(null=True, blank=True)
     course = models.ForeignKey('course.Course', on_delete=models.CASCADE, related_name='mentors')
 
     objects = models.Manager()
