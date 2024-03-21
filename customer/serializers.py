@@ -87,13 +87,11 @@ class StudentSerializer(serializers.ModelSerializer):
         return student
 
     def update(self, instance, validated_data):
+        super().update(instance, validated_data)
         group = validated_data.get('group', None)
         if group:
             instance.group = group
             instance.status = group.status
-        else:
-            instance.group = None
-            instance.status = 'no_started'
         instance.save()
         return instance
 

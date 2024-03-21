@@ -6,9 +6,19 @@ from group.models import Group
 
 
 class GroupSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    created_time = serializers.DateTimeField(read_only=True)
+    started_time = serializers.DateTimeField(read_only=True)
+    finished_time = serializers.DateTimeField(read_only=True)
+    status = serializers.CharField(max_length=20, read_only=True)
+    students_count = serializers.SerializerMethodField('get_students_count')
+
     class Meta:
         model = Group
-        fields = '__all__'
+        fields = ['id', 'title', 'course', 'mentor', 'image', 'created_time', 'started_time', 'finished_time', 'status', 'study_day', 'students_count']
+
+    def get_students_count(self, obj):
+        return obj.students.count()
 
 
 class GroupListSerializer(serializers.ModelSerializer):
@@ -24,7 +34,7 @@ class GroupListSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
         fields = ['id', 'title', 'course', 'course_info', 'mentor', 'mentor_info', 'image', 'created_time',
-                  'started_time', 'finished_time', 'status', 'students_count']
+                  'started_time', 'finished_time', 'status', 'study_day', 'students_count']
 
     def get_course_info(self, obj) -> dict:
         return CourseSerializer(obj.course).data
@@ -58,7 +68,7 @@ class GroupRetrieveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Group
         fields = ['id', 'title', 'course', 'course_info', 'mentor', 'mentor_info', 'image', 'created_time',
-                  'started_time', 'finished_time', 'status', 'students', 'students_count']
+                  'started_time', 'finished_time', 'status', 'study_day', 'students', 'students_count']
 
     def get_course_info(self, obj) -> dict:
         return CourseSerializer(obj.course).data
