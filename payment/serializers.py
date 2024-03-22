@@ -21,7 +21,7 @@ class PaymentListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Payment
-        fields = ['id', 'student', 'student_info', 'amount', 'payment_type', 'created_time', 'update_time', ]
+        fields = ['id', 'student', 'student_info', 'amount', 'month', 'payment_type', 'created_time', 'update_time', ]
 
     def get_student(self, obj) -> dict:
         from customer.serializers import StudentSerializer
