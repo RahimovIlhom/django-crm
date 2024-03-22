@@ -10,6 +10,7 @@ class Group(models.Model):
     )
     title = models.CharField(max_length=50)
     course = models.ForeignKey('course.Course', related_name='groups', on_delete=models.CASCADE)
+    continuity = models.IntegerField(default=6)
     mentor = models.ForeignKey('customer.Mentor', related_name='groups', on_delete=models.SET_NULL, null=True,
                                blank=True)
     image = models.ImageField(upload_to='group/images/', null=True, blank=True)

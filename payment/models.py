@@ -11,6 +11,7 @@ PAYMENT_CHOICES = [
 class Payment(models.Model):
     student = models.ForeignKey('customer.Student', related_name='payments', on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=11, decimal_places=2)
+    month = models.CharField(max_length=20, default='1-oy')
     payment_type = models.CharField(max_length=10, choices=PAYMENT_CHOICES, default='cash')
     created_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)

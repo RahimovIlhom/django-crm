@@ -1,3 +1,4 @@
+from django.utils import timezone
 from rest_framework import serializers
 
 from attendance.serializers import AttendanceSerializer
@@ -9,17 +10,32 @@ from .models import Mentor, Student
 
 
 class MentorSerializers(serializers.ModelSerializer):
-
     class Meta:
         model = Mentor
         fields = '__all__'
 
 
 class StudentSerializers(serializers.ModelSerializer):
+    attendances = serializers.SerializerMethodField('get_attendances')
+    payments = serializers.SerializerMethodField('get_payments')
 
     class Meta:
         model = Student
-        fields = '__all__'
+        fields = ['fullname', 'phone_number', 'parents', 'coming', 'course', 'group', 'balance', 'created_time', 'update_time', 'status', 'attendances', 'payments']
+
+    def get_attendances(self, obj) -> list:
+        year = self.context.get('year')
+        month = self.context.get('month')
+        if year is None:
+            year = timezone.now().year
+        if month is None:
+            month = timezone.now().month
+        attendances = obj.attendances.filter(date__year=year, date__month=month)
+        return AttendanceSerializer(attendances, many=True).data
+
+    def get_payments(self, obj) -> list:
+        payments = obj.payments.all()
+        return PaymentSerializer(payments, many=True).data
 
 
 class MentorSerializer(serializers.ModelSerializer):
@@ -29,7 +45,8 @@ class MentorSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Mentor
-        fields = ['id', 'fullname', 'phone_number', 'photo', 'location', 'birthday', 'course', 'course_info', 'group_count']
+        fields = ['id', 'fullname', 'phone_number', 'photo', 'location', 'birthday', 'course', 'course_info',
+                  'group_count']
 
     def get_group_count(self, obj):
         return obj.groups.count()
@@ -46,7 +63,8 @@ class MentorRetrieveSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Mentor
-        fields = ['id', 'fullname', 'phone_number', 'photo', 'location', 'birthday', 'course', 'course_info', 'group_count',
+        fields = ['id', 'fullname', 'phone_number', 'photo', 'location', 'birthday', 'course', 'course_info',
+                  'group_count',
                   'groups']
 
     def get_group_count(self, obj):

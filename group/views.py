@@ -44,6 +44,16 @@ class GroupRetrieveAPIView(generics.RetrieveAPIView):
     queryset = Group.objects.all()
     serializer_class = GroupRetrieveSerializer
 
+    @swagger_auto_schema(manual_parameters=[
+        openapi.Parameter('year', openapi.IN_QUERY, description="Filtering student attendaces by year", type=openapi.TYPE_INTEGER),
+        openapi.Parameter('month', openapi.IN_QUERY, description="Filtering student attendaces by month", type=openapi.TYPE_INTEGER)
+    ])
+    def get_serializer_context(self):
+        context = super().get_serializer_context()
+        context['year'] = self.request.query_params.get('year')
+        context['month'] = self.request.query_params.get('month')
+        return context
+
 
 class GroupUpdateAPIView(generics.UpdateAPIView):
     queryset = Group.objects.all()
