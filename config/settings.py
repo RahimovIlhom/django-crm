@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     "payment.apps.PaymentConfig",
     "attendance.apps.AttendanceConfig",
     "users.apps.UsersConfig",
+    "lid_app.apps.LidAppConfig",
 ]
 
 MIDDLEWARE = [
