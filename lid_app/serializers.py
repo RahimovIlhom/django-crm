@@ -14,7 +14,7 @@ class LidSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Lid
-        fields = ['id', 'fullname', 'phone_number', 'parents', 'coming', 'course', 'course_info', 'group', 'group_info',
+        fields = ['id', 'fullname', 'phone_number', 'parents', 'coming', 'course', 'school', 'course_info', 'group', 'group_info',
                   'balance', 'created_time', 'update_time', 'status']
 
     def get_course(self, obj) -> dict:

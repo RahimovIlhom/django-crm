@@ -31,6 +31,7 @@ class Student(models.Model):
     phone_number = models.CharField(max_length=15)
     parents = models.TextField()
     coming = models.CharField(max_length=255, null=True, blank=True)
+    school = models.CharField(max_length=500, null=True, blank=True)
     course = models.ForeignKey('course.Course', related_name='students', on_delete=models.CASCADE)
     group = models.ForeignKey('group.Group', related_name='students', on_delete=models.SET_NULL, null=True, blank=True)
     balance = models.DecimalField(max_digits=11, decimal_places=2, default=0)
