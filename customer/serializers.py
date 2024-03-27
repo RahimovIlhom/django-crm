@@ -21,7 +21,7 @@ class StudentSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ['fullname', 'phone_number', 'parents', 'coming', 'course', 'group', 'balance', 'created_time', 'update_time', 'status', 'attendances', 'payments']
+        fields = ['id', 'fullname', 'phone_number', 'parents', 'coming', 'course', 'group', 'balance', 'created_time', 'update_time', 'status', 'attendances', 'payments']
 
     def get_attendances(self, obj) -> list:
         year = self.context.get('year')
