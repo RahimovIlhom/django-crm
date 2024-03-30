@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from course.serializers import CourseSerializer
 from group.serializers import GroupSerializer
-from lid_app.models import Lid
+from lid_app.models import Lid, Contact
 
 
 class LidSerializer(serializers.ModelSerializer):
@@ -22,3 +22,10 @@ class LidSerializer(serializers.ModelSerializer):
 
     def get_group(self, obj) -> dict:
         return GroupSerializer(obj.group).data
+
+
+class ContactSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Contact
+        fields = '__all__'

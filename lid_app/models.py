@@ -29,3 +29,18 @@ class Lid(models.Model):
 
     def __str__(self):
         return f"{self.fullname} - {self.status}"
+
+
+class Contact(models.Model):
+    fullname = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=15)
+    location = models.CharField(max_length=50)
+    was_answered = models.BooleanField(default=False)
+    created_time = models.DateTimeField(auto_now_add=True)
+    update_time = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return f"{self.fullname} - {self.phone_number}"
+
+    class Meta:
+        ordering = ['-created_time']

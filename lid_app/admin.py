@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from lid_app.models import Lid
+from lid_app.models import Lid, Contact
 
 
 class LidAdmin(admin.ModelAdmin):
@@ -9,4 +9,11 @@ class LidAdmin(admin.ModelAdmin):
     search_fields = ['fullname', 'phone_number', 'location']
 
 
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ['fullname', 'phone_number', 'location', 'was_answered', 'created_time']
+    list_filter = ['was_answered']
+    search_fields = ['fullname', 'phone_number', 'location']
+
+
 admin.site.register(Lid, LidAdmin)
+admin.site.register(Contact, ContactAdmin)

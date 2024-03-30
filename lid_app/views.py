@@ -2,11 +2,11 @@ from django.db.models import Q
 from django.shortcuts import render
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import generics
+from rest_framework import generics, permissions
 
 from attendance.pagination import CustomPagination
-from lid_app.models import Lid
-from lid_app.serializers import LidSerializer
+from lid_app.models import Lid, Contact
+from lid_app.serializers import LidSerializer, ContactSerializer
 
 
 class LidListAPIView(generics.ListAPIView):
@@ -48,3 +48,30 @@ class LidUpdateAPIView(generics.UpdateAPIView):
 class LidDeleteAPIView(generics.DestroyAPIView):
     queryset = Lid.objects.all()
     serializer_class = LidSerializer
+
+
+class ContactListAPIView(generics.ListAPIView):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer
+    pagination_class = CustomPagination
+
+
+class ContactRetrieveAPIView(generics.RetrieveAPIView):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer
+
+
+class ContactCreateAPIView(generics.CreateAPIView):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+class ContactUpdateAPIView(generics.UpdateAPIView):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer
+
+
+class ContactDeleteAPIView(generics.DestroyAPIView):
+    queryset = Contact.objects.all()
+    serializer_class = ContactSerializer
