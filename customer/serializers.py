@@ -21,7 +21,7 @@ class StudentSerializers(serializers.ModelSerializer):
 
     class Meta:
         model = Student
-        fields = ['id', 'fullname', 'phone_number', 'parents', 'coming', 'school', 'course', 'group', 'balance', 'created_time', 'update_time', 'status', 'attendances', 'payments']
+        fields = ['id', 'fullname', 'phone_number', 'parents', 'coming', 'school', 'course', 'group', 'added_date', 'balance', 'created_time', 'update_time', 'status', 'attendances', 'payments']
 
     def get_attendances(self, obj) -> list:
         year = self.context.get('year')
@@ -88,7 +88,7 @@ class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = ['id', 'fullname', 'phone_number', 'parents', 'coming', 'school', 'course', 'course_info', 'group', 'group_info',
-                  'balance', 'created_time', 'update_time', 'status']
+                  'added_date', 'balance', 'created_time', 'update_time', 'status']
 
     def get_course(self, obj) -> dict:
         return CourseSerializer(obj.course).data
@@ -126,7 +126,7 @@ class StudentRetrieveSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
         fields = ['id', 'fullname', 'phone_number', 'parents', 'coming', 'school', 'course', 'course_info', 'group', 'group_info',
-                  'balance', 'created_time', 'update_time', 'status', 'attendances', 'payments']
+                  'added_date', 'balance', 'created_time', 'update_time', 'status', 'attendances', 'payments']
 
     def get_course(self, obj) -> dict:
         return CourseSerializer(obj.course).data

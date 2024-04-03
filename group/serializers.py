@@ -85,7 +85,7 @@ class GroupRetrieveSerializer(serializers.ModelSerializer):
         from customer.serializers import StudentSerializers
         month = self.context.get('month')
         year = self.context.get('year')
-        serialized_students = StudentSerializers(obj.students.all(), many=True, context={'year': year, 'month': month}).data
+        serialized_students = StudentSerializers(obj.students.filter(status=obj.status), many=True, context={'year': year, 'month': month}).data
         return serialized_students
 
     def get_students_count(self, obj):

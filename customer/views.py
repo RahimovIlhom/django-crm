@@ -96,8 +96,8 @@ class StudentDeleteAPIView(generics.DestroyAPIView):
 
     def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        group = instance.group
-        instance.group = None
+        # group = instance.group
+        # instance.group = None
         instance.status = 'deleted'
         instance.save()
         data = {'success': True, 'message': "The student has been removed from the group and added to the deleted list"}
