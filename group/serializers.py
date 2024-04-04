@@ -16,7 +16,7 @@ class GroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Group
-        fields = ['id', 'title', 'course', 'continuity', 'mentor', 'lesson_start_time', 'lesson_end_time', 'image',
+        fields = ['id', 'title', 'course', 'continuity', 'mentor', 'added_date', 'lesson_start_time', 'lesson_end_time', 'image',
                   'created_time', 'started_time', 'finished_time', 'status', 'study_day', 'students_count']
 
     def get_students_count(self, obj):
@@ -36,7 +36,7 @@ class GroupListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Group
-        fields = ['id', 'title', 'course', 'continuity', 'course_info', 'mentor', 'mentor_info', 'lesson_start_time', 'lesson_end_time', 'image', 'created_time',
+        fields = ['id', 'title', 'course', 'continuity', 'course_info', 'mentor', 'added_date', 'mentor_info', 'lesson_start_time', 'lesson_end_time', 'image', 'created_time',
                   'started_time', 'finished_time', 'status', 'study_day', 'students_count']
 
     def get_course_info(self, obj) -> dict:
@@ -71,7 +71,7 @@ class GroupRetrieveSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Group
-        fields = ['id', 'title', 'course', 'continuity', 'course_info', 'mentor', 'mentor_info', 'lesson_start_time', 'lesson_end_time', 'image', 'created_time',
+        fields = ['id', 'title', 'course', 'continuity', 'course_info', 'mentor', 'added_date', 'mentor_info', 'lesson_start_time', 'lesson_end_time', 'image', 'created_time',
                   'started_time', 'finished_time', 'status', 'study_day', 'students', 'students_count']
 
     def get_course_info(self, obj) -> dict:

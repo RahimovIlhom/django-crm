@@ -13,6 +13,7 @@ class Group(models.Model):
     continuity = models.IntegerField(default=6)
     mentor = models.ForeignKey('customer.Mentor', related_name='groups', on_delete=models.SET_NULL, null=True,
                                blank=True)
+    added_date = models.DateField(null=True, blank=True)
     lesson_start_time = models.TimeField(null=True, blank=True)
     lesson_end_time = models.TimeField(null=True, blank=True)
     image = models.ImageField(upload_to='group/images/', null=True, blank=True)
