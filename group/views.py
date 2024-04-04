@@ -48,6 +48,9 @@ class GroupRetrieveAPIView(generics.RetrieveAPIView):
         openapi.Parameter('year', openapi.IN_QUERY, description="Filtering student attendaces by year", type=openapi.TYPE_INTEGER),
         openapi.Parameter('month', openapi.IN_QUERY, description="Filtering student attendaces by month", type=openapi.TYPE_INTEGER)
     ])
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
     def get_serializer_context(self):
         context = super().get_serializer_context()
         context['year'] = self.request.query_params.get('year')
