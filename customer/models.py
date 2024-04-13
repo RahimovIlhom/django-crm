@@ -35,6 +35,7 @@ class Student(models.Model):
     course = models.ForeignKey('course.Course', related_name='students', on_delete=models.CASCADE)
     group = models.ForeignKey('group.Group', related_name='students', on_delete=models.SET_NULL, null=True, blank=True)
     added_date = models.DateField(null=True, blank=True)
+    grant = models.BooleanField(default=False)
     balance = models.DecimalField(max_digits=11, decimal_places=2, default=0)
     created_time = models.DateTimeField(auto_now_add=True)
     update_time = models.DateTimeField(auto_now=True)
