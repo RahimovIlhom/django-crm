@@ -20,6 +20,11 @@ DEBUG = env("DEBUG", default=False)
 
 ALLOWED_HOSTS = ['*']
 
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+
 CORS_ORIGIN_ALLOW_ALL = True
 # CORS_REPLACE_HTTPS_REFERER = True
 CSRF_TRUSTED_ORIGINS = [
@@ -28,6 +33,9 @@ CSRF_TRUSTED_ORIGINS = [
     'http://admin.djangoacademy.uz/',
     'http://django-admin.uz/',
     'http://localhost:5173',
+    'https://admin.djangoacademy.uz/',
+    'https://django-admin.uz/',
+    'https://localhost:5173',
 ]
 CORS_ALLOW_HEADERS = ["accept", "referer", "accept-encoding", "authorization", "content-type", "dnt", "origin",
                       "user-agent", "x-csrftoken", "x-sessionid", "x-requested-with"]
@@ -58,6 +66,7 @@ INSTALLED_APPS = [
     # 'rest_framework.authtoken',
     "rest_framework_simplejwt",
     'corsheaders',
+    'sslserver',
 
     # local apps
     'home_app.apps.HomeAppConfig',
