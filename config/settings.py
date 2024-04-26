@@ -66,7 +66,8 @@ INSTALLED_APPS = [
     # 'rest_framework.authtoken',
     "rest_framework_simplejwt",
     'corsheaders',
-    # 'sslserver',
+    'django_extensions',
+    'sslserver',
 
     # local apps
     'home_app.apps.HomeAppConfig',
@@ -91,6 +92,9 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'home_app.middleware.NotFoundMiddleware',
 ]
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
