@@ -13,6 +13,7 @@ gunicorn==21.2.0
 inflection==0.5.1
 MarkupSafe==2.1.5
 marshmallow==3.20.2
+mysqlclient==2.2.4
 packaging==23.2
 pillow==10.2.0
 pycparser==2.22
