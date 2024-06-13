@@ -23,36 +23,41 @@ DEBUG = env("DEBUG", default=False)
 ALLOWED_HOSTS = ['*']
 
 CORS_ALLOWED_ORIGINS = [
-    'https://django-crm-off.netlify.app',  # Manzilingizni to'g'ri qo'shing
-    'https://django-admin.uz',
-    'http://django-admin.uz',
     'https://lms.django-admin.uz',
     'http://lms.django-admin.uz',
-]
-
-CSRF_TRUSTED_ORIGINS = [
     'https://django-crm-off.netlify.app',
     'https://django-admin.uz',
     'http://django-admin.uz',
-    'https://lms.django-admin.uz',
-    'http://lms.django-admin.uz',
+    'http://localhost:3000',
 ]
+
 CORS_ALLOW_HEADERS = list(default_headers) + [
     'Authorization',
     'Content-Type',
+    'X-Requested-With',
+    'Access-Control-Allow-Headers'
 ]
-CORS_EXPOSE_HEADERS = ['Set-Cookie']
 
-CORS_ALLOWED_HOSTS = [
-    'localhost',
-    'admin.djangoacademy.uz',
-    'django-admin.uz'
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
 
+CSRF_TRUSTED_ORIGINS = [
+    'https://lms.django-admin.uz',
+    'http://lms.django-admin.uz',
+    'https://django-crm-off.netlify.app',
+    'https://django-admin.uz',
+    'http://django-admin.uz',
+    'http://localhost:3000',
+]
 
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
