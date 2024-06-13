@@ -26,16 +26,16 @@ CORS_ALLOWED_ORIGINS = [
     'https://django-crm-off.netlify.app',  # Manzilingizni to'g'ri qo'shing
     'https://django-admin.uz',
     'http://django-admin.uz',
-    'https://lms.django-admin.uz'
-    'http://lms.django-admin.uz'
+    'https://lms.django-admin.uz',
+    'http://lms.django-admin.uz',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://django-crm-off.netlify.app',
     'https://django-admin.uz',
     'http://django-admin.uz',
-    'https://lms.django-admin.uz'
-    'http://lms.django-admin.uz'
+    'https://lms.django-admin.uz',
+    'http://lms.django-admin.uz',
 ]
 CORS_ALLOW_HEADERS = list(default_headers) + [
     'Authorization',
