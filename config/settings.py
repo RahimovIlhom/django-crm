@@ -1,5 +1,7 @@
 from datetime import timedelta
 from pathlib import Path
+
+from corsheaders.defaults import default_headers
 from environs import Env
 
 env = Env()
@@ -20,25 +22,25 @@ DEBUG = env("DEBUG", default=False)
 
 ALLOWED_HOSTS = ['*']
 
-# SECURE_SSL_REDIRECT = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
-
-
-CORS_ORIGIN_ALLOW_ALL = True
-# CORS_REPLACE_HTTPS_REFERER = True
-CSRF_TRUSTED_ORIGINS = [
-    'https://localhost',
-    'https://0.0.0.0:8000',
-    'http://admin.djangoacademy.uz/',
-    'http://django-admin.uz/',
-    'http://localhost:5173',
-    'https://admin.djangoacademy.uz/',
-    'https://django-admin.uz/',
-    'https://localhost:5173',
+CORS_ALLOWED_ORIGINS = [
+    'https://django-crm-off.netlify.app',  # Manzilingizni to'g'ri qo'shing
+    'https://django-admin.uz',
+    'http://django-admin.uz',
+    'https://lms.django-admin.uz'
+    'http://lms.django-admin.uz'
 ]
-CORS_ALLOW_HEADERS = ["accept", "referer", "accept-encoding", "authorization", "content-type", "dnt", "origin",
-                      "user-agent", "x-csrftoken", "x-sessionid", "x-requested-with"]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://django-crm-off.netlify.app',
+    'https://django-admin.uz',
+    'http://django-admin.uz',
+    'https://lms.django-admin.uz'
+    'http://lms.django-admin.uz'
+]
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'Authorization',
+    'Content-Type',
+]
 CORS_EXPOSE_HEADERS = ['Set-Cookie']
 
 CORS_ALLOWED_HOSTS = [
