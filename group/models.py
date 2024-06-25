@@ -6,7 +6,8 @@ from customer.models import STATUS
 class Group(models.Model):
     STUDY_DAY_CHOICES = (
         ('toq', 'Dushanba, Chorshanba, Juma'),
-        ('juft', 'Seshanba, Payshanba, Shanba')
+        ('juft', 'Seshanba, Payshanba, Shanba'),
+        ('barcha_kun', "Har kuni"),
     )
     title = models.CharField(max_length=50)
     course = models.ForeignKey('course.Course', related_name='groups', on_delete=models.CASCADE)
