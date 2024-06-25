@@ -20,13 +20,15 @@ DEBUG = env("DEBUG", default=False)
 
 ALLOWED_HOSTS = ['*']
 
-# SECURE_SSL_REDIRECT = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
-
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 CORS_ORIGIN_ALLOW_ALL = True
 # CORS_REPLACE_HTTPS_REFERER = True
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+
 CSRF_TRUSTED_ORIGINS = [
     'https://localhost',
     'https://0.0.0.0:8000',
@@ -35,6 +37,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:5173',
     'https://admin.djangoacademy.uz/',
     'https://django-admin.uz/',
+    'https://lms.django-admin.uz/',
     'https://localhost:5173',
 ]
 CORS_ALLOW_HEADERS = ["accept", "referer", "accept-encoding", "authorization", "content-type", "dnt", "origin",
@@ -44,13 +47,11 @@ CORS_EXPOSE_HEADERS = ['Set-Cookie']
 CORS_ALLOWED_HOSTS = [
     'localhost',
     'admin.djangoacademy.uz',
-    'django-admin.uz'
+    'django-admin.uz',
+    'lms.django-admin.uz',
 ]
 
 CORS_ALLOW_CREDENTIALS = True
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -92,9 +93,6 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'home_app.middleware.NotFoundMiddleware',
 ]
-
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),

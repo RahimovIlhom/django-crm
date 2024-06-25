@@ -4,7 +4,6 @@ from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, permissions
 
-from attendance.pagination import CustomPagination
 from lid_app.models import Lid, Contact
 from lid_app.serializers import LidSerializer, ContactSerializer
 
@@ -12,7 +11,6 @@ from lid_app.serializers import LidSerializer, ContactSerializer
 class LidListAPIView(generics.ListAPIView):
     queryset = Lid.objects.all()
     serializer_class = LidSerializer
-    pagination_class = CustomPagination
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -53,7 +51,6 @@ class LidDeleteAPIView(generics.DestroyAPIView):
 class ContactListAPIView(generics.ListAPIView):
     queryset = Contact.objects.all()
     serializer_class = ContactSerializer
-    pagination_class = CustomPagination
 
 
 class ContactRetrieveAPIView(generics.RetrieveAPIView):

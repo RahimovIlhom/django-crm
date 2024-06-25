@@ -32,7 +32,6 @@ class MentorListAPIView(generics.ListAPIView):
 class StudentListAPIView(generics.ListAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
-    pagination_class = CustomPagination
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -107,7 +106,6 @@ class StudentDeleteAPIView(generics.DestroyAPIView):
 class StudentCompletedListAPIView(generics.ListAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
-    pagination_class = CustomPagination
 
     def get_queryset(self):
         queryset = super().get_queryset()
@@ -128,7 +126,6 @@ class StudentCompletedListAPIView(generics.ListAPIView):
 class StudentDeletedListAPIView(generics.ListAPIView):
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
-    pagination_class = CustomPagination
 
     def get_queryset(self):
         queryset = super().get_queryset()

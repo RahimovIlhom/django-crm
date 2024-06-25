@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from rest_framework import generics
 
-from attendance.pagination import CustomPagination
 from .models import Payment
 from .serializers import PaymentListSerializer
 
@@ -9,7 +8,6 @@ from .serializers import PaymentListSerializer
 class PaymentListAPIView(generics.ListAPIView):
     queryset = Payment.objects.all()
     serializer_class = PaymentListSerializer
-    pagination_class = CustomPagination
 
 
 class PaymentCreateAPIView(generics.CreateAPIView):
