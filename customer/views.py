@@ -4,7 +4,6 @@ from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, status
 from rest_framework.response import Response
 
-from attendance.pagination import CustomPagination
 from customer.models import Mentor, Student
 from customer.serializers import MentorRetrieveSerializer, \
     MentorSerializer, StudentSerializer, StudentRetrieveSerializer

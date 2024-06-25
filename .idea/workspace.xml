@@ -4,10 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="160ac51f-084e-4442-a86d-912cfffb906e" name="Changes" comment="cors update">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="160ac51f-084e-4442-a86d-912cfffb906e" name="Changes" comment="remove paginations">
       <change beforePath="$PROJECT_DIR$/config/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/group/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/group/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/customer/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,6 +88,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="cors update" />
-    <option name="LAST_COMMIT_MESSAGE" value="cors update" />
+    <MESSAGE value="remove paginations" />
+    <option name="LAST_COMMIT_MESSAGE" value="remove paginations" />
   </component>
 </project>
