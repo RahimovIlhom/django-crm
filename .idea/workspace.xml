@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="160ac51f-084e-4442-a86d-912cfffb906e" name="Changes" comment="remove paginations">
+    <list default="true" id="160ac51f-084e-4442-a86d-912cfffb906e" name="Changes" comment="cors update">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/config/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/customer/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,12 +83,28 @@
       <option name="project" value="LOCAL" />
       <updated>1718274232938</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="cors update">
+      <option name="closed" value="true" />
+      <created>1719301212446</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1719301212446</updated>
+    </task>
+    <task id="LOCAL-00005" summary="cors update">
+      <option name="closed" value="true" />
+      <created>1719301223058</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1719301223058</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="cors update" />
     <MESSAGE value="remove paginations" />
-    <option name="LAST_COMMIT_MESSAGE" value="remove paginations" />
+    <MESSAGE value="cors update" />
+    <option name="LAST_COMMIT_MESSAGE" value="cors update" />
   </component>
 </project>

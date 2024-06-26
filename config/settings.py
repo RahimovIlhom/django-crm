@@ -1,5 +1,7 @@
 from datetime import timedelta
 from pathlib import Path
+
+from corsheaders.defaults import default_headers
 from environs import Env
 
 env = Env()
@@ -16,45 +18,8 @@ SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env("DEBUG", default=False)
-# DEBUG = False
 
 ALLOWED_HOSTS = ['*']
-
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
-
-SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT = True
-
-
-CORS_ORIGIN_ALLOW_ALL = True
-# CORS_REPLACE_HTTPS_REFERER = True
-CSRF_TRUSTED_ORIGINS = [
-    'https://localhost',
-    'https://0.0.0.0:8000',
-    'http://admin.djangoacademy.uz/',
-    'http://django-admin.uz/',
-    'http://localhost:5173',
-    'https://admin.djangoacademy.uz/',
-    'https://django-admin.uz/',
-    'https://lms.django-admin.uz/',
-    'https://localhost:5173',
-]
-CORS_ALLOW_HEADERS = ["accept", "referer", "accept-encoding", "authorization", "content-type", "dnt", "origin",
-                      "user-agent", "x-csrftoken", "x-sessionid", "x-requested-with"]
-CORS_EXPOSE_HEADERS = ['Set-Cookie']
-
-CORS_ALLOWED_HOSTS = [
-    'localhost',
-    'admin.djangoacademy.uz',
-    'django-admin.uz'
-    'lms.django-admin.uz'
-]
-
-CORS_ALLOW_CREDENTIALS = True
-
-
-# Application definition
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -97,9 +62,29 @@ MIDDLEWARE = [
     'home_app.middleware.NotFoundMiddleware',
 ]
 
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+# CORS_ALLOWED_ORIGINS = [
+#     "http://localhost:5173",
+#     # Boshqa ruxsat berilgan domenlar
+# ]
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'Authentication',
+]
+
+CORS_ALLOW_CREDENTIALS = True
+
+# Security settings
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+SECURE_SSL_REDIRECT = True
+
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": False,
     "UPDATE_LAST_LOGIN": False,
