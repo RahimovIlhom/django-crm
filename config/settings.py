@@ -125,7 +125,7 @@ SIMPLE_JWT = {
 ROOT_URLCONF = 'config.urls'
 
 REST_FRAMEWORK = {
-    'EXCEPTION_HANDLER': 'home_app.custom_exception_handler.custom_exception_handler',
+    'EXCEPTION_HANDLER': 'home_app.utils.custom_exception_handler',
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],

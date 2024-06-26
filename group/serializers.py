@@ -20,7 +20,10 @@ class GroupSerializer(serializers.ModelSerializer):
                   'created_time', 'started_time', 'finished_time', 'status', 'study_day', 'students_count']
 
     def get_students_count(self, obj):
-        return obj.students.count()
+        group_status = obj.status  # guruhning statusini olamiz
+        matching_students_count = obj.students.filter(
+            status=group_status).count()  # studentlarning mos keladiganlarini sanaymiz
+        return matching_students_count
 
 
 class GroupListSerializer(serializers.ModelSerializer):
@@ -48,7 +51,10 @@ class GroupListSerializer(serializers.ModelSerializer):
         return MentorSerializers(obj.mentor).data
 
     def get_students_count(self, obj):
-        return obj.students.count()
+        group_status = obj.status  # guruhning statusini olamiz
+        matching_students_count = obj.students.filter(
+            status=group_status).count()  # studentlarning mos keladiganlarini sanaymiz
+        return matching_students_count
 
     def to_representation(self, instance):
         data = super().to_representation(instance)
@@ -89,7 +95,10 @@ class GroupRetrieveSerializer(serializers.ModelSerializer):
         return serialized_students
 
     def get_students_count(self, obj):
-        return obj.students.count()
+        group_status = obj.status  # guruhning statusini olamiz
+        matching_students_count = obj.students.filter(
+            status=group_status).count()  # studentlarning mos keladiganlarini sanaymiz
+        return matching_students_count
 
 
 class StudentGroupAssignmentSerializer(serializers.Serializer):
