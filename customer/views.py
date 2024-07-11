@@ -152,7 +152,7 @@ class StudentsExcelAPIView(APIView):
         queryset = Student.objects.filter(Q(status='no_started') | Q(status='continues'))
         serializer_data = StudentsExcelSerializer(queryset, many=True).data
         headers = [
-            "ID", "Fullname", "Phone Number", "Parents", "Coming", "School", "Course",
+            "Number", "Fullname", "Phone Number", "Parents", "Coming", "School", "Course",
             "Group", "Added Date", "Grant", "Balance", "Status"
         ]
         excel_obj = xlsx_writer(headers, serializer_data)

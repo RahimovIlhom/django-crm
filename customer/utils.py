@@ -18,8 +18,9 @@ def xlsx_writer(headers, data):
     for col_num, header in enumerate(headers):
         worksheet.write(0, col_num, header)
 
+    num = 1
     for row_num, student in enumerate(data, start=1):
-        worksheet.write(row_num, 0, student.get("id"))
+        worksheet.write(row_num, 0, num)
         worksheet.write(row_num, 1, student.get("fullname"))
         worksheet.write(row_num, 2, student.get("phone_number"))
         worksheet.write(row_num, 3, student.get("parents"))
@@ -31,6 +32,7 @@ def xlsx_writer(headers, data):
         worksheet.write(row_num, 9, student.get("grant"))
         worksheet.write(row_num, 10, student.get("balance"))
         worksheet.write(row_num, 11, student.get("status"))
+        num += 1
 
     workbook.close()
 
