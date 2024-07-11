@@ -159,7 +159,7 @@ class StudentsExcelSerializer(serializers.ModelSerializer):
         return obj.course.title
 
     def get_group(self, obj) -> str:
-        return obj.group.title
+        return obj.group.title if obj.group else "Mavjud emas"
 
     def get_status(self, obj) -> str:
         if obj.status == "no_started":
