@@ -4,9 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e7505362-6e65-42f4-b8e5-c7e3e00e1cc5" name="Changes" comment="XlsxWriter add requirements.txt">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/customer/serializers.py" afterDir="false" />
+    <list default="true" id="e7505362-6e65-42f4-b8e5-c7e3e00e1cc5" name="Changes" comment="update StudentsExcelSerializer">
+      <change beforePath="$PROJECT_DIR$/customer/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/customer/utils.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/customer/views.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,12 +83,21 @@
       <option name="project" value="LOCAL" />
       <updated>1720699220961</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="update StudentsExcelSerializer">
+      <option name="closed" value="true" />
+      <created>1720700550020</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1720700550020</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="excel created" />
     <MESSAGE value="XlsxWriter add requirements.txt" />
-    <option name="LAST_COMMIT_MESSAGE" value="XlsxWriter add requirements.txt" />
+    <MESSAGE value="update StudentsExcelSerializer" />
+    <option name="LAST_COMMIT_MESSAGE" value="update StudentsExcelSerializer" />
   </component>
 </project>
