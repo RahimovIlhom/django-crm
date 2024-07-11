@@ -1,7 +1,7 @@
 asgiref==3.7.2
 cffi==1.16.0
 cryptography==42.0.5
-Django~=4.2.14
+Django==4.2.14
 django-cors-headers==4.3.1
 django-extensions==3.2.3
 django-sslserver==0.22
@@ -26,4 +26,4 @@ sqlparse==0.4.4
 uritemplate==4.1.1
 Werkzeug==3.0.2
 whitenoise==6.6.0
-XlsxWriter~=3.2.0
+XlsxWriter==3.2.0
