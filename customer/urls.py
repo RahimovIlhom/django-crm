@@ -11,7 +11,7 @@ from customer.views import (
     StudentCreateAPIView,
     StudentUpdateAPIView,
     StudentDeleteAPIView,
-    StudentCompletedListAPIView, StudentDeletedListAPIView,
+    StudentCompletedListAPIView, StudentDeletedListAPIView, StudentsExcelAPIView,
 )
 
 urlpatterns = [
@@ -29,4 +29,5 @@ urlpatterns = [
 
     path('completed/students/', StudentCompletedListAPIView.as_view(), name='students-completed'),
     path('deleted/students/', StudentDeletedListAPIView.as_view(), name='students-deleted'),
+    path('students/excel/', StudentsExcelAPIView.as_view(), name='student-excel'),
 ]

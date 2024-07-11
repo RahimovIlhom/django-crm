@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Mentor, Student
+from .models import Mentor, Student, StudentsExcel
 
 
 class MentorAdmin(admin.ModelAdmin):
@@ -17,3 +17,8 @@ class StudentAdmin(admin.ModelAdmin):
 
 admin.site.register(Mentor, MentorAdmin)
 admin.site.register(Student, StudentAdmin)
+
+
+@admin.register(StudentsExcel)
+class StudentsExcelAdmin(admin.ModelAdmin):
+    list_display = ['excel_file', 'update_time']

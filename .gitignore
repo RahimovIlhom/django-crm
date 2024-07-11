@@ -161,3 +161,4 @@ cython_debug/
 django_certs
 cert.pem
 key.pem
+media

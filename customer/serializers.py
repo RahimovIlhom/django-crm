@@ -6,7 +6,7 @@ from course.models import Course
 from course.serializers import CourseSerializer
 from group.serializers import GroupSerializer
 from payment.serializers import PaymentSerializer
-from .models import Mentor, Student
+from .models import Mentor, Student, StudentsExcel
 
 
 class MentorSerializers(serializers.ModelSerializer):
@@ -141,3 +141,51 @@ class StudentRetrieveSerializer(serializers.ModelSerializer):
     def get_payments(self, obj) -> list:
         payments = obj.payments.all()
         return PaymentSerializer(payments, many=True).data
+
+
+class StudentsExcelSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    course = serializers.SerializerMethodField('get_course')
+    group = serializers.SerializerMethodField('get_group')
+    status = serializers.SerializerMethodField('get_status')
+    grant = serializers.SerializerMethodField('get_grant')
+
+    class Meta:
+        model = Student
+        fields = ['id', 'fullname', 'phone_number', 'parents', 'coming', 'school', 'course', 'group', 'added_date',
+                  'grant', 'balance', 'created_time', 'update_time', 'status']
+
+    def get_course(self, obj) -> str:
+        return obj.course.title
+
+    def get_group(self, obj) -> str:
+        return obj.group.title
+
+    def get_status(self, obj) -> str:
+        if obj.status == "no_started":
+            return "Kurs boshlanmadi"
+        elif obj.status == 'continues':
+            return "Kurs davomida"
+        elif obj.status == 'completed':
+            return "Yakunlagan"
+        elif obj.status == 'deleted':
+            return "O'chirilgan"
+
+    def get_grant(self, obj) -> str:
+        if obj.grant:
+            return "Grand"
+        else:
+            return "Grand emas"
+
+
+class ExcelFileSerializer(serializers.ModelSerializer):
+    id = serializers.IntegerField(read_only=True)
+    excel_file_url = serializers.SerializerMethodField()
+
+    class Meta:
+        model = StudentsExcel
+        fields = ['id', 'excel_file_url', 'update_time']
+
+    def get_excel_file_url(self, obj):
+        request = self.context.get('request')
+        return request.build_absolute_uri(obj.excel_file.url)

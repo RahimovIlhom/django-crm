@@ -1,12 +1,14 @@
 from django.db.models import Q
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
-from rest_framework import generics, status
+from rest_framework import generics, status, permissions
 from rest_framework.response import Response
+from rest_framework.views import APIView
 
 from customer.models import Mentor, Student
 from customer.serializers import MentorRetrieveSerializer, \
-    MentorSerializer, StudentSerializer, StudentRetrieveSerializer
+    MentorSerializer, StudentSerializer, StudentRetrieveSerializer, StudentsExcelSerializer, ExcelFileSerializer
+from customer.utils import xlsx_writer
 
 
 class MentorListAPIView(generics.ListAPIView):
@@ -140,3 +142,18 @@ class StudentDeletedListAPIView(generics.ListAPIView):
     ])
     def get(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
+
+
+class StudentsExcelAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    serializer_class = ExcelFileSerializer
+
+    def get(self, request, *args, **kwargs):
+        queryset = Student.objects.filter(Q(status='no_started') | Q(status='continues'))
+        serializer_data = StudentsExcelSerializer(queryset, many=True).data
+        headers = [
+            "ID", "Fullname", "Phone Number", "Parents", "Coming", "School", "Course",
+            "Group", "Added Date", "Grant", "Balance", "Status"
+        ]
+        excel_obj = xlsx_writer(headers, serializer_data)
+        return Response(self.serializer_class(excel_obj, context={'request': request}).data, status=200)
