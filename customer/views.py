@@ -1,4 +1,7 @@
+import os
+
 from django.db.models import Q
+from django.http import HttpResponse
 from drf_yasg import openapi
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import generics, status, permissions
@@ -7,7 +10,7 @@ from rest_framework.views import APIView
 
 from customer.models import Mentor, Student
 from customer.serializers import MentorRetrieveSerializer, \
-    MentorSerializer, StudentSerializer, StudentRetrieveSerializer, StudentsExcelSerializer, ExcelFileSerializer
+    MentorSerializer, StudentSerializer, StudentRetrieveSerializer, StudentsExcelSerializer
 from customer.utils import xlsx_writer
 
 
@@ -146,7 +149,6 @@ class StudentDeletedListAPIView(generics.ListAPIView):
 
 class StudentsExcelAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
-    serializer_class = ExcelFileSerializer
 
     def get(self, request, *args, **kwargs):
         queryset = Student.objects.filter(Q(status='no_started') | Q(status='continues'))
@@ -155,5 +157,14 @@ class StudentsExcelAPIView(APIView):
             "Number", "Fullname", "Phone Number", "Parents", "Coming", "School", "Course",
             "Group", "Added Date", "Grant", "Balance", "Status"
         ]
-        excel_obj = xlsx_writer(headers, serializer_data)
-        return Response(self.serializer_class(excel_obj, context={'request': request}).data, status=200)
+        excel_path = xlsx_writer(headers, serializer_data)
+        if not os.path.exists(excel_path):
+            return HttpResponse(status=404)
+
+        with open(excel_path, 'rb') as excel:
+            response = HttpResponse(excel.read(),
+                                    content_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            response['Content-Disposition'] = f'attachment; filename="students_data.xlsx"'
+
+        os.remove(excel_path)  # Remove the file after sending it to the client
+        return response

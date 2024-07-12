@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="e7505362-6e65-42f4-b8e5-c7e3e00e1cc5" name="Changes" comment="update StudentsExcelSerializer">
+    <list default="true" id="e7505362-6e65-42f4-b8e5-c7e3e00e1cc5" name="Changes" comment="update excel writer">
+      <change beforePath="$PROJECT_DIR$/.idea/django-lms.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/django-lms.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/config/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/customer/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/customer/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/serializers.py" beforeDir="false" afterPath="$PROJECT_DIR$/customer/serializers.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/customer/utils.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/customer/views.py" afterDir="false" />
     </list>
@@ -44,13 +50,14 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Python.utils.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Python.utils.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "master",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable"
   }
-}</component>
+}]]></component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -91,13 +98,30 @@
       <option name="project" value="LOCAL" />
       <updated>1720700550020</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="update excel writer">
+      <option name="closed" value="true" />
+      <created>1720700864002</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1720700864002</updated>
+    </task>
+    <task id="LOCAL-00005" summary="update excel writer">
+      <option name="closed" value="true" />
+      <created>1720700870241</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1720700870241</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="excel created" />
     <MESSAGE value="XlsxWriter add requirements.txt" />
     <MESSAGE value="update StudentsExcelSerializer" />
-    <option name="LAST_COMMIT_MESSAGE" value="update StudentsExcelSerializer" />
+    <MESSAGE value="update excel writer" />
+    <option name="LAST_COMMIT_MESSAGE" value="update excel writer" />
   </component>
 </project>

@@ -2,8 +2,6 @@ import os
 import xlsxwriter
 from django.core.files import File
 
-from customer.models import StudentsExcel
-
 
 def xlsx_writer(headers, data):
     directory = 'media/students'
@@ -36,8 +34,4 @@ def xlsx_writer(headers, data):
 
     workbook.close()
 
-    with open(filename, 'rb') as file:
-        excel_file = File(file)
-        excel_obj = StudentsExcel.objects.create(excel_file=excel_file)
-
-    return excel_obj
+    return filename

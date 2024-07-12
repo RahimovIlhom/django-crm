@@ -6,7 +6,7 @@ from course.models import Course
 from course.serializers import CourseSerializer
 from group.serializers import GroupSerializer
 from payment.serializers import PaymentSerializer
-from .models import Mentor, Student, StudentsExcel
+from .models import Mentor, Student
 
 
 class MentorSerializers(serializers.ModelSerializer):
@@ -176,16 +176,3 @@ class StudentsExcelSerializer(serializers.ModelSerializer):
             return "Grand"
         else:
             return "Grand emas"
-
-
-class ExcelFileSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField(read_only=True)
-    excel_file_url = serializers.SerializerMethodField()
-
-    class Meta:
-        model = StudentsExcel
-        fields = ['id', 'excel_file_url', 'update_time']
-
-    def get_excel_file_url(self, obj):
-        request = self.context.get('request')
-        return request.build_absolute_uri(obj.excel_file.url)

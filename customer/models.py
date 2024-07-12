@@ -49,19 +49,3 @@ class Student(models.Model):
 
     def __str__(self):
         return f"{self.fullname} - {self.status}"
-
-
-class StudentsExcel(models.Model):
-    excel_file = models.FileField(upload_to='student/excel/')
-    update_time = models.DateTimeField(auto_now=True)
-
-    objects = models.Manager()
-
-    class Meta:
-        ordering = ['-update_time']
-
-    def __str__(self):
-        return f"{self.excel_file}"
-
-    def get_absolute_url(self):
-        return f"{settings.MEDIA_URL}{self.excel_file}"
